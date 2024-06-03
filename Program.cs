@@ -1,14 +1,39 @@
-﻿using System;
-using System.Linq;
-
+using System;
 class Program
 {
     static void Main()
     {
         Console.WriteLine("Введите строку для проверки:");
         string input = Console.ReadLine();
-        
-        if (ContainsLowercase(input) && ContainsDigit(input) && ContainsUppercase(input) && ContainsSpecialCharacter(input))
+
+        if (string.IsNullOrEmpty(input))
+        {
+            Console.WriteLine("Строка не должна быть пустой.");
+            return;
+        }
+
+        bool hasLowercase = false;
+        bool hasDigit = false;
+        bool hasUppercase = false;
+        bool hasSpecialChar = false;
+
+        foreach (char c in input)
+        {
+            if (char.IsLower(c))
+                hasLowercase = true;
+            else if (char.IsDigit(c))
+                hasDigit = true;
+            else if (char.IsUpper(c))
+                hasUppercase = true;
+            else if (!char.IsLetterOrDigit(c))
+                hasSpecialChar = true;
+
+            
+            if (hasLowercase && hasDigit && hasUppercase && hasSpecialChar)
+                break;
+        }
+
+        if (hasLowercase && hasDigit && hasUppercase && hasSpecialChar)
         {
             Console.WriteLine("Строка содержит хотя бы одну букву в нижнем регистре, цифру, букву в верхнем регистре и специальный символ.");
         }
@@ -16,25 +41,5 @@ class Program
         {
             Console.WriteLine("Строка не соответствует всем требованиям.");
         }
-    }
-
-    static bool ContainsLowercase(string str)
-    {
-        return str.Any(char.IsLower);
-    }
-
-    static bool ContainsDigit(string str)
-    {
-        return str.Any(char.IsDigit);
-    }
-
-    static bool ContainsUppercase(string str)
-    {
-        return str.Any(char.IsUpper);
-    }
-
-    static bool ContainsSpecialCharacter(string str)
-    {
-        return str.Any(c => !char.IsLetterOrDigit(c));
     }
 }
